@@ -15,8 +15,13 @@ void *connection_handler(void *);
 
 int no_threads=0;
 
+char fn[20] = "player_list.txt";
+
+playerlist *pl;
+
 int main()
 {
+	pl = loadPlayerList(fn);
     int server_socket;
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
 	
@@ -94,9 +99,7 @@ void *connection_handler(void *client_socket){
 		//end of string marker
 		client_message[read_len] = '\0';
 		printf ("\nMessage recieve from client %s\n", client_message);
-		if(strcmp(client_message,"q")==0 || strcmp(client_message,"Q")==0){break;}
 		//Send the message back to client
-		
 		send_status=send(socket , client_message, strlen(client_message),0);
 		printf("\nMessage send to client %s, size %d bytes\n", client_message, send_status);	
 	}
