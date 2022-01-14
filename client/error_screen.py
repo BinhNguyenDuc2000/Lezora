@@ -22,4 +22,4 @@ class RegisterErrorScreen(ErrorScreen):
     error_dict = {}
     error_dict["PLAYERALREADYEXCIST"] = "Player already excist"
     def __init__(self, message):
-        super().__init__(LoginErrorScreen.error_dict[message])
+        super().__init__(RegisterErrorScreen.error_dict[message])
