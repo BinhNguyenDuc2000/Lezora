@@ -1,7 +1,6 @@
-from color_constant import colors
-from button import TextButton
-from pygame import error
-from screen import ScreenInterface
+from element.color_constant import colors
+from element.button import TextButton
+from screen.screen import ScreenInterface
 
 class ErrorScreen(ScreenInterface):
     def __init__(self, message):
