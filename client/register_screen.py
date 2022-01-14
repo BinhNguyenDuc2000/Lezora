@@ -1,6 +1,4 @@
-import pygame as pg
 from color_constant import colors
-from network import Network
 from button import TextButton
 from input_box import InputBox
 from screen import ScreenInterface
@@ -16,4 +14,4 @@ class RegisterScreen(ScreenInterface):
         self.password_label = TextButton(160, 210, 160, 40, "Password", active_color = colors["purple4"],
             border_color=colors["deeppink1"], inactive_color=colors["purple4"], font_color=colors["deeppink1"])
         self.password_box = InputBox(160, 260, 320, 40)
-        self.submit = TextButton(260, 320, 120, 40, "Submit", colors["gray"])
+        self.submit_button = TextButton(260, 320, 120, 40, "Submit", colors["gray"])

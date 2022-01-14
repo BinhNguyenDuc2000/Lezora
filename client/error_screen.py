@@ -1,8 +1,6 @@
-import pygame as pg
 from color_constant import colors
-from network import Network
 from button import TextButton
-from input_box import InputBox
+from pygame import error
 from screen import ScreenInterface
 
 class ErrorScreen(ScreenInterface):
@@ -11,3 +9,17 @@ class ErrorScreen(ScreenInterface):
             border_color=colors["deeppink1"], inactive_color=colors["purple4"], font_color=colors["deeppink1"])
 
         self.try_again_button = TextButton(250, 240, 140, 40, "Try again", colors["gray"])
+        
+class LoginErrorScreen(ErrorScreen):
+    error_dict = {}
+    error_dict["PLAYERNOTFOUND"] = "Player is not found"
+    error_dict["PLAYERALREADYONLINE"] = "Player is already online"
+    error_dict["INVALIDINPUT"] = "Invalid input"
+    def __init__(self, message):
+        super().__init__(LoginErrorScreen.error_dict[message])
+        
+class RegisterErrorScreen(ErrorScreen):
+    error_dict = {}
+    error_dict["PLAYERALREADYEXCIST"] = "Player already excist"
+    def __init__(self, message):
+        super().__init__(LoginErrorScreen.error_dict[message])
