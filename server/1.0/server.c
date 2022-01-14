@@ -13,6 +13,10 @@
 //Remember to use -pthread when compiling this server's source code
 void *connection_handler(void *);
 
+player *login_player(char *client_message);
+
+player *register_player(char *client_message);
+
 int no_threads=0;
 
 char fn[20] = "player_list.txt";
@@ -90,6 +94,7 @@ void *connection_handler(void *client_socket){
 	int send_status;
     send_status=send(socket, server_message, strlen(server_message), 0);
 	char client_message[BUFSIZ];
+	player *p=NULL;
 	while(1)
 	{
 		read_len=recv(socket,client_message, 100,0);
@@ -99,11 +104,73 @@ void *connection_handler(void *client_socket){
 		//end of string marker
 		client_message[read_len] = '\0';
 		printf ("\nMessage recieve from client %s\n", client_message);
+		char command[10];
+		strcpy(command, strtok(strdup(client_message), "_"));
+		if (strcmp(command, "login")==0){
+			if (strstr(strdup(client_message), "__") == NULL && client_message[read_len-1] != '_'){
+				p = login_player(client_message);
+			}
+			else {
+				strcpy(client_message, "error_INVALIDINPUT");
+			}
+		}
+		if (strcmp(command, "register")==0){
+			if (strstr(strdup(client_message), "__") == NULL && client_message[read_len-1] != '_'){
+				p = register_player(client_message);
+			}
+			else {
+				strcpy(client_message, "error_INVALIDINPUT");
+			}
+		}
 		//Send the message back to client
 		send_status=send(socket , client_message, strlen(client_message),0);
 		printf("\nMessage send to client %s, size %d bytes\n", client_message, send_status);	
 	}
 	printf ("\n Client disconnected\n");
+	if (p!=NULL){
+		p->status = 0;
+	}
 	no_threads--;
 	return 0;
+}
+
+player *login_player(char *client_message){
+	player *p = (player *)malloc(sizeof(player));
+	strtok(client_message, "_");
+	strcpy(p->username, strtok(NULL, "_"));
+	strcpy(p->password, strtok(NULL, "_")); 
+	player *temp = findPlayer(pl, p, 0, comparePlayer);
+	free(p);
+	if (temp == NULL){
+		strcpy(client_message, "error_PLAYERNOTFOUND");
+	}	else
+	{
+		if (temp->status == 0){
+			playerToString(temp, client_message);
+			temp->status = 1;
+		}		else{
+			strcpy(client_message, "error_PLAYERALREADYONLINE");
+		}
+	}
+	return temp;
+}
+
+player *register_player(char *client_message){
+	player *p = (player *)malloc(sizeof(player));
+	strtok(client_message, "_");
+	strcpy(p->username, strtok(NULL, "_"));
+	strcpy(p->password, strtok(NULL, "_")); 
+	player *temp = findPlayer(pl, p, 0, comparePlayerByName);
+	if (temp == NULL){
+		p->rank = 0;
+		p->status = 1;
+		addPlayerToBottom(pl, p);
+		savePlayerList(pl, fn);
+		playerToString(p, client_message);
+	}	else
+	{
+		free(p);
+		strcpy(client_message, "error_PLAYERALREADYEXCIST");
+	}
+	return p;
 }

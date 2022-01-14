@@ -27,6 +27,10 @@ playerlist *addPlayerToTop(playerlist *pl,player *p);
 
 void freePlayerList(playerlist **pl);
 
+int comparePlayer(player *p1, player *p2);
+int comparePlayerByName(player *p1, player *p2);
+player *findPlayer(playerlist *pl, player *target, int range, int f(player *, player *));
+
 void printPlayer(_data d);
 void printPlayerList(playerlist *pl);
 #endif // !__PLAYER_H

@@ -18,7 +18,6 @@ player *createPlayer(char *pd){
     strcpy(p->username, strtok(pd, "_"));
     strcpy(p->password, strtok(NULL, "_"));
     p->rank = atoi(strtok(NULL, "_"));
-    p->deck_id = atoi(strtok(NULL, "_"));
     p->status = 0;
     return p;
 }
@@ -148,8 +147,27 @@ void freePlayerList(playerlist **pl){
 
 
 // Core advance
+int comparePlayer(player *p1, player *p2){
+    if (strcmp(p1->username, p2->username)==0 && strcmp(p1->password, p2->password)==0){
+        return 0;
+    }
+    return 1;
+}
 
+int comparePlayerByName(player *p1, player *p2){
+    if (strcmp(p1->username, p2->username)==0){
+        return 0;
+    }
+    return 1;
+}
 
+player *findPlayer(playerlist *pl, player *target, int range, int f(player *, player *)){
+    node *n = findNode((llist *)pl, (_data) target, 0, (int (*)(_data, _data)) f);
+    if (n==NULL){
+        return NULL;
+    }
+    return (player *)n->data;
+}
 
 // Utils
 /**
@@ -165,7 +183,8 @@ void printPlayer(_data d){
     player *p = (player *)d;
     printGreen("Player: ");
     char buf[1024];
-    playerToString(p, buf);
+    bzero(buf, 1024);
+    playerToString(p, (char *)buf);
     printf("%s", buf);
 }
 
