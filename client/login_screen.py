@@ -1,6 +1,4 @@
-import pygame as pg
 from color_constant import colors
-from network import Network
 from button import TextButton
 from input_box import InputBox
 from screen import ScreenInterface
