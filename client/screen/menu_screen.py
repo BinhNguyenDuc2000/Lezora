@@ -1,6 +1,6 @@
-from color_constant import colors
-from button import TextButton
-from screen import ScreenInterface
+from element.color_constant import colors
+from element.button import TextButton
+from screen.screen import ScreenInterface
 
 class MenuScreen(ScreenInterface):
     def __init__(self):

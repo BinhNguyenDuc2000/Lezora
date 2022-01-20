@@ -1,11 +1,11 @@
 import pygame as pg
-from color_constant import colors
+from element.color_constant import colors
 from network import Network
-from error_screen import ErrorScreen, LoginErrorScreen, RegisterErrorScreen
-from loading_screen import LoadingScreen
-from menu_screen import MenuScreen
-from login_screen import LoginScreen
-from register_screen import RegisterScreen
+from screen.error_screen import ErrorScreen, LoginErrorScreen, RegisterErrorScreen
+from screen.loading_screen import LoadingScreen
+from screen.menu_screen import MenuScreen
+from screen.login_screen import LoginScreen
+from screen.register_screen import RegisterScreen
 
 def main():
     clock = pg.time.Clock()
