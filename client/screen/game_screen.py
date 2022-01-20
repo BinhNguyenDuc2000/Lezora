@@ -242,9 +242,7 @@ class GameScreen(ScreenInterface):
                     if value.__class__.__name__ == "Card":
                         if value.is_clicked(pos[0], pos[1]):
                             self.show_helper_card(value)
-                            return           
-                
-        self.hide_helper_message()
+                            return              
         self.hide_helper_card()
                     
     def refresh(self):

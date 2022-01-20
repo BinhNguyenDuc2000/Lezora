@@ -3,6 +3,8 @@ from pygame import mixer
 from screen.config import DEFAULT_SCREEN_COLOR, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, MAX_VOLUME, MIN_VOLUME, CLICK_SFX
 from element.borderless_button import BorderlessPictureButton
 
+import webbrowser
+
 """
     Basic screen function
 """
@@ -15,6 +17,8 @@ class ScreenInterface:
         except:
             pg.mixer.init()
             self.sound_button = self.mute_sound_button
+        
+        self.question_button = BorderlessPictureButton(0, 320, 40, 40, pg.image.load("asset/sprite/question.png"), 30, sfx=CLICK_SFX)
             
     """
         Darken screen by drawing on top a black screen with decreasing opacity
@@ -58,6 +62,9 @@ class ScreenInterface:
                     else:
                         mixer.music.set_volume(MAX_VOLUME)
                         self.sound_button = self.mute_sound_button
+                
+                if self.question_button.is_clicked(pos[0], pos[1]):
+                    webbrowser.open("https://docs.google.com/presentation/d/10GmPmx27uVzn10_yeLz9sgCPXRtgp0vuGG8SFdkBIFI/edit?usp=sharing")
 
     """
         Return all element to inactive state
