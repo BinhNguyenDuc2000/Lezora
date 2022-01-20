@@ -224,54 +224,66 @@ void advancePhase(game *g)
     }
 }
 
-void sellCard(game *g, int card_index)
+int sellCard(game *g, int card_index)
 {
     if (g->phase == 1 || g->phase == 4)
     {
         g->board1->res += ((g->board1->hand)[card_index]).refund_cost;
         ((g->board1->card_status)[card_index]) = 1;
+        return 1;
     }
 
     if (g->phase == 2 || g->phase == 3)
     {
         g->board2->res += ((g->board2->hand)[card_index]).refund_cost;
         ((g->board2->card_status)[card_index]) = 1;
+        return 1;
     }
+    return 0;
 }
 
-void useCard(game *g, int card_index){
+int useCard(game *g, int card_index){
     switch (g->phase)
     {
     case 1:
         if (g->board1->res >= ((g->board1->hand)[card_index]).use_cost){
             g->board1->atk += ((g->board1->hand)[card_index]).atk;
             ((g->board1->card_status)[card_index]) = 2;
+            g->board1->res -= ((g->board1->hand)[card_index]).use_cost;
             advancePhase(g);
+            return 1;
         }
         break;
     case 2:
         if (g->board2->res >= ((g->board2->hand)[card_index]).use_cost){
             g->board2->def += ((g->board2->hand)[card_index]).def;
             (g->board2->card_status)[card_index] = 2;
+            g->board2->res -= ((g->board2->hand)[card_index]).use_cost;
             advancePhase(g);
+            return 1;
         }
         break;
     case 3:
         if (g->board2->res >= ((g->board2->hand)[card_index]).use_cost){
             g->board2->atk += ((g->board2->hand)[card_index]).atk;
             ((g->board2->card_status)[card_index]) = 2;
+            g->board2->res -= ((g->board2->hand)[card_index]).use_cost;
             advancePhase(g);
+            return 1;
         }
         break;
     case 4:
         if (g->board1->res >= ((g->board1->hand)[card_index]).use_cost){
             g->board1->def += ((g->board1->hand)[card_index]).def;
             ((g->board1->card_status)[card_index]) = 2;
+            g->board1->res -= ((g->board1->hand)[card_index]).use_cost;
             advancePhase(g);
+            return 1;
         }
         break;
 
     default:
         break;
     }
+    return 0;
 }

@@ -204,13 +204,19 @@ void *connection_handler(void *client_socket)
 
 		if (strcmp(command, "sell") == 0){
 			pthread_mutex_lock(&mutex);
-			sellCard(g, atoi(strtok(NULL, "_")));
+			if (!sellCard(g, atoi(strtok(NULL, "_"))))
+			{
+				strcpy(client_message, "error_sell");
+			}
 			pthread_mutex_unlock(&mutex);
 		}
 
 		if (strcmp(command, "use") == 0){
 			pthread_mutex_lock(&mutex);
-			useCard(g, atoi(strtok(NULL, "_")));
+			if (!useCard(g, atoi(strtok(NULL, "_"))))
+			{
+				strcpy(client_message, "error_use");
+			}
 			pthread_mutex_unlock(&mutex);
 		}
 

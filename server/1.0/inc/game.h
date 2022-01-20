@@ -36,8 +36,8 @@ int getGameListLength(gamelist *gl);
 // Game related
 void advancePhase(game *g);
 
-void sellCard(game *g, int card_index);
+int sellCard(game *g, int card_index);
 
-void useCard(game *g, int card_index);
+int useCard(game *g, int card_index);
 
 #endif // !__LLIST_H_
