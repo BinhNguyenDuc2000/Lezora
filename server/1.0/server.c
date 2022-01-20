@@ -198,6 +198,7 @@ void *connection_handler(void *client_socket)
 		if (strcmp(command, "pass") == 0){
 			pthread_mutex_lock(&mutex);
 			advancePhase(g);
+			printf("phase: %d\n", g->phase);
 			pthread_mutex_unlock(&mutex);
 		}
 
@@ -234,10 +235,10 @@ void *connection_handler(void *client_socket)
 				gameToString(g, client_message);
 				send_status = send(socket, client_message, strlen(client_message), 0);
 			}
-			
+			pthread_mutex_unlock(&mutex);
 		}
 		else if (strcmp(command, "getboard") == 0){
-			
+			pthread_mutex_lock(&mutex);
 			if (atoi(strtok(NULL, "_"))==1){
 				boardToString(g->board1, client_message);
 			}

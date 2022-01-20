@@ -177,9 +177,10 @@ void advancePhase(game *g)
         {
             g->board1->hp -= lost_hp;    
         }
-        if (g->board1->hp < 0)
+        if (g->board1->hp <= 0)
         {
             g->phase = 6;
+            g->status = 0;
             return;
         } 
         g->round++;
@@ -193,9 +194,10 @@ void advancePhase(game *g)
         {
             g->board2->hp -= lost_hp;    
         }
-        if (g->board2->hp < 0)
+        if (g->board2->hp <= 0)
         {
             g->phase = 5;
+            g->status = 0;
             return;
         } 
         g->round++;
@@ -212,10 +214,12 @@ void advancePhase(game *g)
         else if (g->board1->hp < g->board2->hp)
         {
             g->phase = 6;
+            g->status = 0;
         }
         else 
         {
             g->phase = 7;
+            g->status = 0;
         }
     }
 }

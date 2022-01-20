@@ -7,7 +7,7 @@ board *newBoard(char *username, int rank){
     board *b = (board *)malloc(sizeof(board));
     b->username = username;
     b->rank = rank;
-    b->hp = 20;
+    b->hp = 12;
     b->atk = 0;
     b->def = 0;
     b->res = 0;
