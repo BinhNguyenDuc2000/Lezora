@@ -34,6 +34,7 @@ def main():
     register_screen = RegisterScreen()
     player_index = 0
     opponent_index = 0
+    current_phase = ""
     
     try:
         n = Network()
@@ -158,8 +159,15 @@ def main():
                                 current_screen.fade_in(screen) 
                             
                             elif (res[0] == "atk"):
-                                print(player_index)
-                                if (int(res[1]) == player_index):
+                                if (int(res[1]) == player_index):                                   
+                                    # Show user notice
+                                    if current_phase != res[0]:
+                                        current_screen.show_helper_message("Your turn to attack")
+                                        current_screen.draw(screen)
+                                        pg.display.flip()
+                                        pg.time.wait(1000)
+                                        current_phase = res[0]
+                                        
                                     current_screen.set_eye_button("pass")
                                     player_board = n.send("getboard_"+str(player_index))
                                     if player_board is None:
@@ -192,6 +200,15 @@ def main():
                                     
                             elif (res[0] == "def"):
                                 if (int(res[1]) == player_index):
+                                    
+                                    # Show user notice
+                                    if current_phase != res[0]:
+                                        current_screen.show_helper_message("Your turn to defend")
+                                        current_screen.draw(screen)
+                                        pg.display.flip()
+                                        pg.time.wait(1000)
+                                        current_phase = res[0]
+                                    
                                     current_screen.set_eye_button("pass")
                                     player_board = n.send("getboard_"+str(player_index))
                                     if player_board is None:
@@ -484,9 +501,7 @@ def main():
                                 res = n.send("pass")
                                 if res is None:
                                     raise Exception("Can't connect to server")
-                                else:
-                                    if res != "pass":
-                                        raise Exception("Can't connect to server")
+
                             except:
                                 game_start = False
                                 current_screen.refresh()

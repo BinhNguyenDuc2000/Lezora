@@ -237,12 +237,14 @@ class GameScreen(ScreenInterface):
         super().handle_event(event)
         if event.type == pg.MOUSEMOTION:
             pos = pg.mouse.get_pos()
-            for value in self.__dict__.values():           
+            for key, value in self.__dict__.items():           
                 if value is not None:          
                     if value.__class__.__name__ == "Card":
                         if value.is_clicked(pos[0], pos[1]):
                             self.show_helper_card(value)
-                            return             
+                            return           
+                
+        self.hide_helper_message()
         self.hide_helper_card()
                     
     def refresh(self):
