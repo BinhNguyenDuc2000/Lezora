@@ -1,0 +1,34 @@
+username = opponent_board[1]
+        rank = opponent_board[2]
+        hp = opponent_board[3]
+        res = opponent_board[4]
+        atk = opponent_board[5]
+        tired_factor = opponent_board[7]
+        card1 = opponent_board[8]
+        card_status1 = opponent_board[9]
+        card2 = opponent_board[10]
+        card_status2 = opponent_board[11]
+        card3 = opponent_board[12]
+        card_status3 = opponent_board[13]
+        card4 = opponent_board[14] 
+        card_status4 = opponent_board [15]
+        
+        self.opponent_username = BorderlessTextButton(420, 320, 120, 60, username + "-" + rank, colors["white"]
+                                                    , font=DEFAULT_FONT_VERY_SMALL)
+        self.opponent_hp = BorderlessTextButton(570, 320, 40, 40, hp, colors["darkpink"], font=DEFAULT_FONT_SMALL)
+        
+        self.opponent_res = BorderlessTextButton(580, 250, 30, 30, res, colors["darkpink"], font=DEFAULT_FONT_SMALL)
+        
+        self.opponent_tired_factor = BorderlessTextButton(520, 250, 30, 30, tired_factor, 
+                                                        colors["darkpink"], font=DEFAULT_FONT_SMALL)
+        
+        self.opponent_atk = TextButton(458, 248, 32, 32, atk, colors["pink"], font=DEFAULT_FONT_SMALL,
+                                     font_color=colors["white"], border_color=colors["darkpink"])
+        
+        self.opponent_card1 = Card(80, 300, 60, 80, colors["white"], cards[card1], card_status1)
+        
+        self.opponent_card2 = Card(160, 300, 60, 80, colors["white"], cards[card2], card_status2)
+        
+        self.opponent_card3 = Card(240, 300, 60, 80, colors["white"], cards[card3], card_status3)
+        
+        self.opponent_card4 = Card(320, 300, 60, 80, colors["white"], cards[card4], card_status4)

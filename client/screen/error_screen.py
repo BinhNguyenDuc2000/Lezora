@@ -1,13 +1,17 @@
 from element.color_constant import colors
 from element.button import TextButton
 from screen.screen import ScreenInterface
+from screen.config import DEFAULT_FONT, CLICK_SFX
 
 class ErrorScreen(ScreenInterface):
     def __init__(self, message):
-        self.error_message = TextButton(150, 80, 340, 100, message, active_color = colors["purple4"],
-            border_color=colors["deeppink1"], inactive_color=colors["purple4"], font_color=colors["deeppink1"])
+        super().__init__()
+        self.error_message = TextButton(20, 80, 600, 100, message, colors["purple"], font=DEFAULT_FONT, 
+            border_color=colors["darkpink"], font_color=colors["darkpink"])
 
-        self.try_again_button = TextButton(250, 240, 140, 40, "Try again", colors["gray"])
+        self.try_again_button = TextButton(220, 240, 200, 40, "Try again", colors["darksilver"], 
+                                           font=DEFAULT_FONT, brighten_level=30, font_color=colors["silver"],
+                                           sfx=CLICK_SFX)
         
 class LoginErrorScreen(ErrorScreen):
     error_dict = {}
@@ -19,6 +23,12 @@ class LoginErrorScreen(ErrorScreen):
         
 class RegisterErrorScreen(ErrorScreen):
     error_dict = {}
-    error_dict["PLAYERALREADYEXCIST"] = "Player already excist"
+    error_dict["PLAYERALREADYEXIST"] = "Player already exist"
     def __init__(self, message):
         super().__init__(RegisterErrorScreen.error_dict[message])
+        
+class InGameMenuErrorScreen(ErrorScreen):
+    error_dict = {}
+    error_dict["INVALIDGAME"] = "Game ID is invalid"
+    def __init__(self, message):
+        super().__init__(InGameMenuErrorScreen.error_dict[message])

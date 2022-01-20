@@ -4,6 +4,7 @@ import socket
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
         self.server = "192.168.56.3"
         self.port = 5555
         self.addr = (self.server, self.port)
@@ -11,14 +12,16 @@ class Network:
 
     def connect(self):
         try:
+            self.client.settimeout(10)
             self.client.connect(self.addr)
             return self.client.recv(2048).decode()
         except:
-            pass
+            raise socket.error("Cannot connect")
 
     def send(self, data):
         try:
+            self.client.settimeout(20)
             self.client.send(str.encode(data))
             return self.client.recv(2048).decode()
-        except socket.error as e:
-            print(e)
+        except:
+            raise socket.error("Cannot connect")

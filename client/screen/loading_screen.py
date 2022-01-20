@@ -1,8 +1,11 @@
 from element.color_constant import colors
 from element.button import TextButton
 from screen.screen import ScreenInterface
+from screen.config import DEFAULT_FONT, CLICK_SFX
 
 class LoadingScreen(ScreenInterface):
-    def __init__(self):
-        self.error_message = TextButton(150, 80, 340, 100, "Loading", active_color = colors["purple4"],
-            border_color=colors["deeppink1"], inactive_color=colors["purple4"], font_color=colors["deeppink1"])
+    def __init__(self, text="Loading"):
+        super().__init__()
+        self.error_message = TextButton(120, 80, 400, 100, text, colors["purple"], DEFAULT_FONT, 0, 
+                                        border_color=colors["darkpink"],
+                                        font_color=colors["darkpink"])
