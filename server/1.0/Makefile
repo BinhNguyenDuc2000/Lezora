@@ -27,6 +27,12 @@ ${TESTDIR}/test_llist: % : %.o ${BINDIR}/color_text.o ${BINDIR}/llist.o
 ${TESTDIR}/test_player: % : %.o ${OBJECT}
 	${CC}	${LIBS} -o $@ $^
 
+${TESTDIR}/test_game: % : %.o ${OBJECT}
+	${CC}	${LIBS} -o $@ $^
+
+${TESTDIR}/test_board: % : %.o ${OBJECT}
+	${CC}	${LIBS} -o $@ $^
+
 ${TESTDIR}/%.o: ${TESTDIR}/%.c
 	${CC}	${CFLAGS}	$< -o $@
 

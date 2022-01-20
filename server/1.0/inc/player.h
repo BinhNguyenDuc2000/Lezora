@@ -5,11 +5,9 @@
 
 typedef struct _player
 {
-    char username[50];
-    char password[50];
+    char username[20];
+    char password[20];
     int rank;
-
-    int deck_id;
 
     int status; // Game connection status, 0: offline, 1: online, 2: ingame
 

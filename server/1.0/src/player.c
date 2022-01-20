@@ -148,6 +148,7 @@ void freePlayerList(playerlist **pl){
 
 // Core advance
 int comparePlayer(player *p1, player *p2){
+    // printf ("\n%s/%s\n%s-%s\n", p1->username, p2->username, p1->password, p2->password);
     if (strcmp(p1->username, p2->username)==0 && strcmp(p1->password, p2->password)==0){
         return 0;
     }

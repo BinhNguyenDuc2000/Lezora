@@ -110,6 +110,9 @@ void freeList(llist **ll){
  * @return node* 
  */
 node *findNode(llist *ll, _data target, int range, int f(_data, _data)){
+    if (ll == NULL){
+        return NULL;
+    }
     node *n = ll->top;
     while (n!=ll->bottom)
     {
