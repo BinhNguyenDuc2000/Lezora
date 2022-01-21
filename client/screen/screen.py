@@ -10,20 +10,26 @@ import webbrowser
 """
 class ScreenInterface:
     def __init__(self):
+        self.question_button = BorderlessPictureButton(0, 320, 40, 40, pg.image.load("asset/sprite/question.png"), 30, sfx=CLICK_SFX)
         self.unmute_sound_button = BorderlessPictureButton(0, 360, 40, 40, pg.image.load("asset/sprite/nobell.png"), 30, sfx=CLICK_SFX)
         self.mute_sound_button = BorderlessPictureButton(0, 360, 40, 40, pg.image.load("asset/sprite/bell.png"), 30, sfx=CLICK_SFX)
         try:
             self.sound_button = self.mute_sound_button if mixer.music.get_volume() > MIN_VOLUME else self.unmute_sound_button
         except:
             pg.mixer.init()
-            self.sound_button = self.mute_sound_button
+            self.sound_button = self.mute_sound_button if mixer.music.get_volume() > MIN_VOLUME else self.unmute_sound_button
         
-        self.question_button = BorderlessPictureButton(0, 320, 40, 40, pg.image.load("asset/sprite/question.png"), 30, sfx=CLICK_SFX)
+        
             
     """
         Darken screen by drawing on top a black screen with decreasing opacity
     """
     def fade_in(self, screen, width=DEFAULT_SCREEN_WIDTH, height=DEFAULT_SCREEN_HEIGHT):
+        try:
+            self.sound_button = self.mute_sound_button if mixer.music.get_volume() > MIN_VOLUME else self.unmute_sound_button
+        except:
+            pg.mixer.init()
+            self.sound_button = self.mute_sound_button if mixer.music.get_volume() > MIN_VOLUME else self.unmute_sound_button
         fade = pg.Surface((width, height))
         fade.fill((0,0,0))
         for alpha in range(300, 0, -2):
