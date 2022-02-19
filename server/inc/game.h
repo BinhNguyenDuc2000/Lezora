@@ -11,7 +11,8 @@ typedef struct _game
     player *player1;
     player *player2;
     int phase; // Phase in a game, 1: player 1 attack, 2 player 2 defend, 3 player 2 attack, 4 player 1 defend
-            // Special phase include 0: room is created but the game has not started, 5: player 1 win, 6: player 2 win, 7: tie 
+            // Special phase include 0: room is created but the game has not started, 
+            // 5: player 1 win, 6: player 2 win, 7: tie 
     int round; // Round in game, every 1-3 or 3-1 phase avance round by 1
     board *board1;
     board *board2;

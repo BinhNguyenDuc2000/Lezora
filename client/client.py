@@ -248,7 +248,7 @@ def main():
                                     
                                 
                     except Exception as e:
-                        # print(e)
+                        print(e)
                         game_start = False
                         current_screen.refresh()
                         current_screen = ErrorScreen("Can't connect to server")
@@ -524,12 +524,13 @@ def main():
                                 current_screen.fade_in(screen)
 
                         
-                        elif current_screen.player_card1.is_clicked(pos[0], pos[1]) and current_screen.player_card1.status == "0":
+                        elif current_screen.player_card_list.is_clicked(pos[0], pos[1]) and current_screen.player_card_list.get_clicked(pos[0], pos[1]).status == "0":
                             try:
+                                card = current_screen.player_card_list.get_clicked(pos[0], pos[1])
                                 if event.button == 3: 
-                                    res = n.send("sell_0")
+                                    res = n.send("sell_"+str(card.number))
                                 else:
-                                    res = n.send("use_0")
+                                    res = n.send("use_"+str(card.number))
                                 if res is None:
                                     raise Exception("Can't connect to server")
                                 
@@ -549,93 +550,6 @@ def main():
                                 current_screen.refresh()
                                 current_screen = ErrorScreen("Can't connect to server")
                                 current_screen.fade_in(screen)
-                                
-                        elif current_screen.player_card2.is_clicked(pos[0], pos[1]) and current_screen.player_card2.status == "0":
-                            try:
-                                if event.button == 3: 
-                                    res = n.send("sell_1")
-                                else:
-                                    res = n.send("use_1")
-                                if res is None:
-                                    raise Exception("Can't connect to server")
-                                
-                                res = res.split("_")
-                                
-                                if res[0] == "error":
-                                    current_screen.show_helper_message("Cannot " + res[1] +" card 2")
-                                    current_screen.draw(screen)
-                                    pg.display.flip()
-                                    pg.time.wait(1000)
-                                    current_screen.refresh()
-                                    current_screen.draw(screen)
-                                    pg.display.flip()
-                                    
-                            except:
-                                game_start = False
-                                current_screen.refresh()
-                                current_screen = ErrorScreen("Can't connect to server")
-                                current_screen.fade_in(screen)
-                                
-                        elif current_screen.player_card3.is_clicked(pos[0], pos[1]) and current_screen.player_card3.status == "0":
-                            try:
-                                if event.button == 3: 
-                                    res = n.send("sell_2")
-                                else:
-                                    res = n.send("use_2")
-                                if res is None:
-                                    raise Exception("Can't connect to server")
-                                
-                                res = res.split("_")
-                                
-                                if res[0] == "error":
-                                    current_screen.show_helper_message("Cannot " + res[1] +" card 3")
-                                    current_screen.draw(screen)
-                                    pg.display.flip()
-                                    pg.time.wait(1000)
-                                    current_screen.refresh()
-                                    current_screen.draw(screen)
-                                    pg.display.flip()
-                                
-                            except:
-                                game_start = False
-                                current_screen.refresh()
-                                current_screen = ErrorScreen("Can't connect to server")
-                                current_screen.fade_in(screen)
-                        
-                        elif current_screen.player_card4.is_clicked(pos[0], pos[1]) and current_screen.player_card4.status == "0":
-                            try:
-                                if event.button == 3: 
-                                    res = n.send("sell_3")
-                                else:
-                                    res = n.send("use_3")
-                                if res is None:
-                                    raise Exception("Can't connect to server")
-                                res = res.split("_")
-                            
-                                if res[0] == "error":
-                                    current_screen.show_helper_message("Cannot " + res[1] +" card 4")
-                                    current_screen.draw(screen)
-                                    pg.display.flip()
-                                    pg.time.wait(1000)
-                                    current_screen.refresh()
-                                    current_screen.draw(screen)
-                                    pg.display.flip()
-                                
-                            except:
-                                game_start = False
-                                current_screen.refresh()
-                                current_screen = ErrorScreen("Can't connect to server")
-                                current_screen.fade_in(screen)   
-                                    
-                    else:
-                        current_screen.show_helper_message("Not your turn")
-                        current_screen.draw(screen)
-                        pg.display.flip()
-                        pg.time.wait(1000)      
-                        current_screen.refresh()
-                        current_screen.draw(screen)
-                        pg.display.flip()        
-
 
             
         current_screen.draw(screen)

@@ -9,6 +9,7 @@ import webbrowser
     Basic screen function
 """
 class ScreenInterface:
+    
     def __init__(self):
         self.question_button = BorderlessPictureButton(0, 320, 40, 40, pg.image.load("asset/sprite/question.png"), 30, sfx=CLICK_SFX)
         self.unmute_sound_button = BorderlessPictureButton(0, 360, 40, 40, pg.image.load("asset/sprite/nobell.png"), 30, sfx=CLICK_SFX)

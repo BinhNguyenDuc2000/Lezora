@@ -9,7 +9,7 @@ typedef struct _player
     char password[20];
     int rank;
 
-    int status; // Game connection status, 0: offline, 1: online, 2: ingame
+    int status; // Game connection status, 0: offline, 1: online
 
 } player;
 

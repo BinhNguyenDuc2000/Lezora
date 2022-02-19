@@ -1,6 +1,7 @@
 from element.button import TextButton
 from element.borderless_button import BorderlessPictureButton, BorderlessTextButton
 from element.card import Card
+from element.card_list import CardList
 from element.color_constant import colors
 from screen.screen import ScreenInterface
 from screen.config import CLICK_SFX, DEFAULT_FONT_SMALL, DEFAULT_FONT_VERY_SMALL, DEFAULT_SCREEN_COLOR, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, cards
@@ -38,52 +39,25 @@ class GameScreen(ScreenInterface):
         self.helper_message = None
         
     def update_player_board_atk(self, player_board):
-        sfx = CLICK_SFX if self.eye_button.text != "wait" else None
-        brighten_level = 30 if self.eye_button.text != "wait" else 0
-        username = player_board[1]
-        rank = player_board[2]
-        hp = player_board[3]
-        res = player_board[4]
+        self.update_player_board(player_board)
         atk = player_board[5]
-        tired_factor = player_board[7]
-        card1 = player_board[8]
-        card_status1 = player_board[9]
-        card2 = player_board[10]
-        card_status2 = player_board[11]
-        card3 = player_board[12]
-        card_status3 = player_board[13]
-        card4 = player_board[14] 
-        card_status4 = player_board [15]
-        
-        self.player_username = BorderlessTextButton(420, 320, 120, 60, username + "-" + rank, colors["white"]
-                                                    , font=DEFAULT_FONT_VERY_SMALL)
-        self.player_hp = BorderlessTextButton(570, 320, 40, 40, hp, colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
-        self.player_res = BorderlessTextButton(580, 250, 30, 30, res, colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
-        self.player_tired_factor = BorderlessTextButton(520, 250, 30, 30, tired_factor, 
-                                                        colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
         self.player_combat = TextButton(458, 248, 32, 32, atk, colors["pink"], font=DEFAULT_FONT_SMALL,
                                      font_color=colors["white"], border_color=colors["darkpink"])
         
-        self.player_card1 = Card(80, 300, 60, 80, colors["white"], cards[card1], card_status1, brighten_level=brighten_level, sfx=sfx)
-        
-        self.player_card2 = Card(160, 300, 60, 80, colors["white"], cards[card2], card_status2, brighten_level=brighten_level, sfx=sfx)
-        
-        self.player_card3 = Card(240, 300, 60, 80, colors["white"], cards[card3], card_status3, brighten_level=brighten_level, sfx=sfx)
-        
-        self.player_card4 = Card(320, 300, 60, 80, colors["white"], cards[card4], card_status4, brighten_level=brighten_level, sfx=sfx)
-        
     def update_player_board_def(self, player_board):
+        self.update_player_board(player_board)
+        defend = player_board[6]
+        self.player_combat = TextButton(458, 248, 32, 32, defend, colors["blue"], font=DEFAULT_FONT_SMALL,
+                                     font_color=colors["white"], border_color=colors["darkpink"])
+        
+        
+    def update_player_board(self, player_board):
         sfx = CLICK_SFX if self.eye_button.text != "wait" else None
         brighten_level = 30 if self.eye_button.text != "wait" else 0
-        
         username = player_board[1]
         rank = player_board[2]
         hp = player_board[3]
         res = player_board[4]
-        defend = player_board[6]
         tired_factor = player_board[7]
         card1 = player_board[8]
         card_status1 = player_board[9]
@@ -103,113 +77,79 @@ class GameScreen(ScreenInterface):
         self.player_tired_factor = BorderlessTextButton(520, 250, 30, 30, tired_factor, 
                                                         colors["darkpink"], font=DEFAULT_FONT_SMALL)
         
-        self.player_combat = TextButton(458, 248, 32, 32, defend, colors["blue"], font=DEFAULT_FONT_SMALL,
-                                     font_color=colors["white"], border_color=colors["darkpink"])
+        player_card1 = Card(80, 300, 60, 80, colors["white"], cards[card1], card_status1, brighten_level=brighten_level, sfx=sfx, number=0)
         
-        self.player_card1 = Card(80, 300, 60, 80, colors["white"], cards[card1], card_status1, brighten_level=brighten_level, sfx=sfx)
+        player_card2 = Card(160, 300, 60, 80, colors["white"], cards[card2], card_status2, brighten_level=brighten_level, sfx=sfx, number=1)
         
-        self.player_card2 = Card(160, 300, 60, 80, colors["white"], cards[card2], card_status2, brighten_level=brighten_level, sfx=sfx)
+        player_card3 = Card(240, 300, 60, 80, colors["white"], cards[card3], card_status3, brighten_level=brighten_level, sfx=sfx, number=2)
         
-        self.player_card3 = Card(240, 300, 60, 80, colors["white"], cards[card3], card_status3, brighten_level=brighten_level, sfx=sfx)
+        player_card4 = Card(320, 300, 60, 80, colors["white"], cards[card4], card_status4, brighten_level=brighten_level, sfx=sfx, number=3)
         
-        self.player_card4 = Card(320, 300, 60, 80, colors["white"], cards[card4], card_status4, brighten_level=brighten_level, sfx=sfx)
-        
+        self.player_card_list = CardList(player_card1, player_card2, player_card3, player_card4)
+    
     
     def update_opponent_board_atk(self, opponent_board):
-        username = opponent_board[1]
-        rank = opponent_board[2]
-        hp = opponent_board[3]
-        res = opponent_board[4]
+        self.update_opponent_board(opponent_board)
+        
         atk = opponent_board[5]
-        tired_factor = opponent_board[7]
-        card1 = opponent_board[8]
-        card_status1 = opponent_board[9]
-        card2 = opponent_board[10]
-        card_status2 = opponent_board[11]
-        card3 = opponent_board[12]
-        card_status3 = opponent_board[13]
-        card4 = opponent_board[14] 
-        card_status4 = opponent_board [15]
-        
-        self.opponent_username = BorderlessTextButton(420, 40, 120, 60, username + "-" + rank, colors["white"]
-                                                    , font=DEFAULT_FONT_VERY_SMALL)
-        self.opponent_hp = BorderlessTextButton(570, 40, 40, 40, hp, colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
-        self.opponent_res = BorderlessTextButton(580, 120, 30, 30, res, colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
-        self.opponent_tired_factor = BorderlessTextButton(520, 120, 30, 30, tired_factor, 
-                                                        colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
         self.opponent_combat = TextButton(458, 118, 32, 32, atk, colors["pink"], font=DEFAULT_FONT_SMALL,
                                      font_color=colors["white"], border_color=colors["darkpink"])
-        
-        if card_status1 != "0":
-            self.opponent_card1 = Card(80, 20, 60, 80, colors["white"], cards[card1], card_status1)
-        else:
-            self.opponent_card1 = Card(80, 20, 60, 80, colors["white"], cards["-1"], card_status1)
-        
-        if card_status2 != "0":
-            self.opponent_card2 = Card(160, 20, 60, 80, colors["white"], cards[card2], card_status2)
-        else:
-            self.opponent_card2 = Card(160, 20, 60, 80, colors["white"], cards["-1"], card_status2)
-        
-        if card_status3 != "0":
-            self.opponent_card3 = Card(240, 20, 60, 80, colors["white"], cards[card3], card_status3)
-        else:
-            self.opponent_card3 = Card(240, 20, 60, 80, colors["white"], cards["-1"], card_status3)
-        
-        if card_status4 != "0":
-            self.opponent_card4 = Card(320, 20, 60, 80, colors["white"], cards[card4], card_status4)
-        else:
-            self.opponent_card4 = Card(320, 20, 60, 80, colors["white"], cards["-1"], card_status4)
-        
+             
+    
     def update_opponent_board_def(self, opponent_board):
-        username = opponent_board[1]
-        rank = opponent_board[2]
-        hp = opponent_board[3]
-        res = opponent_board[4]
+        self.update_opponent_board(opponent_board)
+        
         defend = opponent_board[6]
-        tired_factor = opponent_board[7]
-        card1 = opponent_board[8]
-        card_status1 = opponent_board[9]
-        card2 = opponent_board[10]
-        card_status2 = opponent_board[11]
-        card3 = opponent_board[12]
-        card_status3 = opponent_board[13]
-        card4 = opponent_board[14] 
-        card_status4 = opponent_board [15]
-        
-        self.opponent_username = BorderlessTextButton(420, 40, 120, 60, username + "-" + rank, colors["white"]
-                                                    , font=DEFAULT_FONT_VERY_SMALL)
-        self.opponent_hp = BorderlessTextButton(570, 40, 40, 40, hp, colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
-        self.opponent_res = BorderlessTextButton(580, 120, 30, 30, res, colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
-        self.opponent_tired_factor = BorderlessTextButton(520, 120, 30, 30, tired_factor, 
-                                                        colors["darkpink"], font=DEFAULT_FONT_SMALL)
-        
         self.opponent_combat = TextButton(458, 118, 32, 32, defend, colors["blue"], font=DEFAULT_FONT_SMALL,
                                      font_color=colors["white"], border_color=colors["darkpink"])
         
+    
+    def update_opponent_board(self, opponent_board):
+        username = opponent_board[1]
+        rank = opponent_board[2]
+        hp = opponent_board[3]
+        res = opponent_board[4]
+        tired_factor = opponent_board[7]
+        card1 = opponent_board[8]
+        card_status1 = opponent_board[9]
+        card2 = opponent_board[10]
+        card_status2 = opponent_board[11]
+        card3 = opponent_board[12]
+        card_status3 = opponent_board[13]
+        card4 = opponent_board[14] 
+        card_status4 = opponent_board [15]
+        
+        self.opponent_username = BorderlessTextButton(420, 40, 120, 60, username + "-" + rank, colors["white"]
+                                                    , font=DEFAULT_FONT_VERY_SMALL)
+        self.opponent_hp = BorderlessTextButton(570, 40, 40, 40, hp, colors["darkpink"], font=DEFAULT_FONT_SMALL)
+        
+        self.opponent_res = BorderlessTextButton(580, 120, 30, 30, res, colors["darkpink"], font=DEFAULT_FONT_SMALL)
+        
+        self.opponent_tired_factor = BorderlessTextButton(520, 120, 30, 30, tired_factor, 
+                                                        colors["darkpink"], font=DEFAULT_FONT_SMALL)
+        
         if card_status1 != "0":
-            self.opponent_card1 = Card(80, 20, 60, 80, colors["white"], cards[card1], card_status1)
+            opponent_card1 = Card(80, 20, 60, 80, colors["white"], cards[card1], card_status1)
         else:
-            self.opponent_card1 = Card(80, 20, 60, 80, colors["white"], cards["-1"], card_status1)
+            opponent_card1 = Card(80, 20, 60, 80, colors["white"], cards["-1"], card_status1)
         
         if card_status2 != "0":
-            self.opponent_card2 = Card(160, 20, 60, 80, colors["white"], cards[card2], card_status2)
+            opponent_card2 = Card(160, 20, 60, 80, colors["white"], cards[card2], card_status2)
         else:
-            self.opponent_card2 = Card(160, 20, 60, 80, colors["white"], cards["-1"], card_status2)
+            opponent_card2 = Card(160, 20, 60, 80, colors["white"], cards["-1"], card_status2)
         
         if card_status3 != "0":
-            self.opponent_card3 = Card(240, 20, 60, 80, colors["white"], cards[card3], card_status3)
+            opponent_card3 = Card(240, 20, 60, 80, colors["white"], cards[card3], card_status3)
         else:
-            self.opponent_card3 = Card(240, 20, 60, 80, colors["white"], cards["-1"], card_status3)
+            opponent_card3 = Card(240, 20, 60, 80, colors["white"], cards["-1"], card_status3)
         
         if card_status4 != "0":
-            self.opponent_card4 = Card(320, 20, 60, 80, colors["white"], cards[card4], card_status4)
+            opponent_card4 = Card(320, 20, 60, 80, colors["white"], cards[card4], card_status4)
         else:
-            self.opponent_card4 = Card(320, 20, 60, 80, colors["white"], cards["-1"], card_status4)
+            opponent_card4 = Card(320, 20, 60, 80, colors["white"], cards["-1"], card_status4)
+        
+        self.opponent_card_list = CardList(opponent_card1, opponent_card2, opponent_card3, opponent_card4)
+    
         
     def draw(self, screen):
         screen.fill(DEFAULT_SCREEN_COLOR)
@@ -239,10 +179,11 @@ class GameScreen(ScreenInterface):
             pos = pg.mouse.get_pos()
             for key, value in self.__dict__.items():           
                 if value is not None:          
-                    if value.__class__.__name__ == "Card":
+                    if value.__class__.__name__ == "CardList":
                         if value.is_clicked(pos[0], pos[1]):
-                            self.show_helper_card(value)
+                            self.show_helper_card(value.get_clicked(pos[0], pos[1]))
                             return              
+                        
         self.hide_helper_card()
                     
     def refresh(self):

@@ -3,7 +3,7 @@ from pygame import mixer
 from element.button import Button
 
 class Card(Button):
-    def __init__(self, x, y, width, height, color, image, status, border_color=(255, 255, 255), brighten_level=0, sfx=None):
+    def __init__(self, x, y, width, height, color, image, status, border_color=(255, 255, 255), brighten_level=0, sfx=None, number=0):
         super().__init__(x, y, width, height, color, border_color, brighten_level, sfx)
         self.BORDER_WIDTH = 5
         self.inactive_image = image
@@ -11,6 +11,7 @@ class Card(Button):
         self.active_image.fill((brighten_level, brighten_level, brighten_level), special_flags=pg.BLEND_RGB_ADD)
         self.image = self.inactive_image
         self.status = status
+        self.number = number
         
     def set_border_color(self):
         if self.status == "0":

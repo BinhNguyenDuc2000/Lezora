@@ -17,3 +17,8 @@ class ElementInterface:
     def refresh(self):
         pass
    
+    """
+       If the element is clicked 
+    """
+    def is_clicked(self, x, y):
+       pass
